@@ -1,0 +1,169 @@
+﻿<html lang="zh-CN"><head>
+<meta charset="UTF-8">
+<title>F**kingCSS</title>
+<style>
+html,body{
+	overflow: hidden; 
+	position: relative;
+	margin: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.rotateBlock{
+	position: absolute;
+	-webkit-transform: rotate(45deg);
+	-webkit-transform-origin: left top;
+}
+
+.block{
+	margin-top: -1000px;
+	width: 1500px;
+	height: 2000px;
+	position: absolute;
+	-webkit-transition:left .5s;
+	
+}
+
+.green_b {
+	background-color: #6BB445;
+}
+.orange_b{
+	background-color: #F5A81F;
+}
+.blue_b{
+	background-color: #09A1EC;
+	left: 6000px;
+}
+.rotateFont{
+	padding: 30% 10%;
+	font-size: 120px;
+	font-family: '微软雅黑';
+	color: rgba(255,255,255,.5);
+	transform:rotate(-45deg);
+}
+.memberlist{
+	padding: 30% 10%;
+	width: 80%;
+	height: 40%;
+	transform: rotate(-45deg);
+}
+.memberItem{
+	display: inline-block;
+	font-size: 15px;
+	vertical-align: top;
+	padding: 30px 1.5%;
+	width: 29%;
+	height: 20%;
+}
+.memberItem img{
+	float: left;
+	width: 100px;
+	height: 100px;
+	border-radius: 100%;
+}
+.memberInfo{
+	float: left;
+	font-size: 25px;
+	font-family: '微软雅黑';
+	color: rgba(255,255,255,.5);
+}
+.memberInfo p{
+	padding-left: 5px;
+	font-size: 20px;
+}
+
+</style></head>
+
+<body>
+<div id="rotateBlock" class="rotateBlock">
+	<div id="green_b" class="block green_b" style="left: 0px;">
+		<div class="rotateFont">F**kingCSS</div> 
+	</div>
+	<div id="orange_b" class="block orange_b" style="left:1500px;">
+		<div class="rotateFont">文字啊，A神会写的</div> 
+	</div>
+	<div id="blue_b" class="block blue_b" style="left: 3000px;">
+		<div class="memberlist">
+			<div class="memberItem">
+				<img src="raymon.png" alt="CDog">
+				<div class="memberInfo">
+					Raymon
+					<p>目前是无业游民，即将上大学<br>给我十年时间，我给你一个战车的世界</p>
+				</div>
+			</div>
+			<div class="memberItem">
+				<img src="http://moefront-app.smartgslb.com/avatar/cd.jpg" alt="CDog">
+				<div class="memberInfo">
+					Raymon
+					<p>目前是无业游民，即将上大学<br>给我十年时间，我给你一个战车的世界</p>
+				</div>
+			</div>
+			<div class="memberItem">
+				<img src="http://moefront-app.smartgslb.com/avatar/cd.jpg" alt="CDog">
+				<div class="memberInfo">
+					Raymon
+					<p>目前是无业游民，即将上大学<br>给我十年时间，我给你一个战车的世界</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+	var orange_b = document.getElementById('orange_b'),
+		green_b = document.getElementById('green_b'),
+		blue_b = document.getElementById('blue_b');
+
+	window.addEventListener('mousewheel',mouseWheelHandler);
+	window.addEventListener("DOMMouseScroll", mouseWheelHandler); //for firefox
+
+	function mouseWheelHandler(e){
+		var e = e || window.event;
+		//使用wheelDelta的正负来判断鼠标是向上滚动还是向下滚动
+		//wheelDelta是120的倍数(鼠标下滚是为负)，detail是firefox的，3的倍数(鼠标下滚为正)。
+		var delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
+
+		green_b.style.left = getOldStyle(green_b,'left') + delta*100 + 'px';
+		orange_b.style.left = getOldStyle(orange_b,'left') + delta*100 + 'px';
+		blue_b.style.left = getOldStyle(blue_b,'left') + delta*100 + 'px';
+	}
+
+    function getOldStyle(dom,paramName){
+
+		var value = (dom.style[paramName] ? dom.style[paramName] : getCss(dom,paramName));
+		if(value){
+			return value.replace('px','')*1
+		}else{
+			return 0;
+		}
+	}
+
+	function getCss(dom,cssName,selectorText){
+
+		var cssRuleList = getMatchedCSSRules(dom); //CSSRuleList 类
+		var value = '';
+
+		for(var i = 0; i<cssRuleList.length; i++){
+			var csslist = cssRuleList[i];
+
+			if(selectorText){
+
+				if( selectorText == csslist.selectorText){
+					return csslist.style[cssName];
+				}
+			}else{
+				value = csslist.style[cssName];
+
+				if(value) return value;
+			}
+		
+		}
+
+	}
+
+
+</script>
+
+
+</body></html>
